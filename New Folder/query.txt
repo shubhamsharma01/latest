@@ -1,0 +1,30 @@
+create table auser(user_id varchar2(10) unique , username varchar2(20) primary key, userpassword varchar2(20), roleid number(10) , 
+FOREIGN KEY (roleid) REFERENCES arole(roleid));
+
+create table arole(roleid number(10) primary key, createdate date, rolename varchar2(10));
+
+
+public String fetchRole(String u) throws SQLException
+	{
+		c=new OracleConnection();
+		conn=c.myConnection();
+		String role="maker";
+		PreparedStatement ps=conn.prepareStatement("select arole.rolename from arole,auser where auser.roleid=arole.roleid AND username=?");  
+		ps.setString(1,u);  
+		ResultSet rs=ps.executeQuery();
+		while(rs.next())
+		{
+			role=rs.getString(1);
+		}
+		return role;
+		
+	}
+
+
+
+
+create table acustomer_mast (customer_id number(10)not null, customer_code varchar2(10) primary key, customer_name varchar2(50) not null,
+customer_address1 varchar2(100) not null, customer_address2 varchar2(100), 
+customer_pincode number(6) not null, email_address varchar2(100) not null, contact_number varchar2(20),
+primary_contact_person varchar2(100) not null ,  record_status varchar2(1) not null, active_inactive_flag varchar2(1) not null , 
+create_date date not null, created_by varchar2(50) not null, modified_date date, modifies_by varchar2(50), authorized_date date, authorized_by varchar2(30));
